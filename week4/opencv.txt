@@ -1,0 +1,131 @@
+## Reading and writing an image ##
+
+import cv2
+import numpy
+
+
+img = cv2.imread("bb1.jpg", 0)
+
+# resizing the image
+# since the size of image is large
+imS = cv2.resize(img, (960, 540))
+
+# will show the image in a window
+cv2.imshow('image', imS)
+cv2.waitKey(0)
+--------------------------------------------------------------------------------------------------------------------------------------------
+
+## Using webcam for Live feed ##
+
+import cv2
+import numpy
+
+# creating an video capture object
+cam = cv2.VideoCapture(0)
+
+while(True):
+    # reading frame to frame
+    ret,frame=cam.read()
+
+    if(ret==True):
+
+        # displaying each frame
+        cv2.imshow("webcam",frame)
+        if (cv2.waitKey(25) & 0xFF == ord('q')):
+            break
+    else:
+        break
+
+# When everything done, release
+# the video capture object
+vid.release()
+
+# To close all the frames
+cv2.destroyAllWindows()
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+## loading and playing video ##
+
+import cv2
+import numpy as np
+
+vid = cv2.VideoCapture("movie1.mkv")
+
+while (True):
+    rest,frame=vid.read()
+
+    if(rest==True):
+
+        img1=cv2.resize(frame,(980,540))
+        cv2.imshow("movie",img1)
+
+        if(cv2.waitKey(25) & 0xFF==ord("q")):
+            break
+
+    else:
+        break
+
+#vid.release()
+
+cv2.destroyAllWindows()
+
+---------------------------------------------------------------------------------------------------------------------------------------------
+
+## Editing and saving images ##
+
+import cv2
+
+# loading image
+img = cv2.imread("bb1.jpg")
+
+# creating a new file and saving the image in it
+cv2.imwrite("brba.jpg",img)
+
+# reading the new file created
+img1 = cv2.imread("brba.jpg")
+
+# resizing the image
+img2 = cv2.resize(img1,(960,540))
+cv2.imshow("Resized",img2)
+
+# returns image shape
+# it returns a tuple of the number of rows, columns, and channels
+print("shape tuple:",img2.shape)
+
+# returning total number of pixels
+print("total number of pixels",img2.size)
+
+(rows,cols)=img2.shape[:2]
+# rotating an image
+M = cv2.getRotationMatrix2D((cols/2,rows/2),45,1)
+img3 = cv2.warpAffine(img2,M,(cols,rows))
+cv2.imshow("edited",img3)
+cv2.waitKey(0)
+
+-----------------------------------------------------------------------------------------------------------------------------------------
+## cropping, reshaping and Drawing ##
+
+import cv2
+import numpy as np
+
+img = cv2.imread("bb1.jpg", 1)
+# resizing an image
+dimensions = (400,500)
+img2 = cv2.resize(img,dimensions)
+cv2.imshow("resized image",img2)
+
+# cropping an image
+img_crop=img[50:200,60:500]
+cv2.imshow("Cropped image",img_crop)
+
+
+# creating an black image
+img3 = np.zeros((512,512,3), dtype="uint8")
+# drawing a line
+cv2.line(img3,(0,0),(500,500),(255,0,0),5)
+cv2.imshow("line",img3)
+
+# drawing a rectangle
+cv2.rectangle(img3,(0,0),(512,512),(255,255,0),6)
+cv2.imshow("rectangle",img3)
+cv2.waitKey(0)
